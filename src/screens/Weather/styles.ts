@@ -6,10 +6,11 @@ const WeatherStyles = StyleSheet.create({
   },
   columnItem: {
     flex: 1,
+    // padding: 15
   },
   row: {
     height: 100,
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     flexDirection: 'row',
   }
 })
