@@ -1,8 +1,9 @@
 import axios, { AxiosRequestConfig, AxiosError } from 'axios'
+import Config from '../../config'
 import store from '../redux/store'
 import { unauthorize } from '../redux/auth/reducer'
 
-const baseURL = 'https://dev-d4d12d1x.au.auth0.com'
+const baseURL = Config.auth0Domain
 const axiosInstance = axios.create({
   baseURL,
 })

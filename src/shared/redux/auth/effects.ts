@@ -3,7 +3,6 @@ import * as AuthSession from 'expo-auth-session'
 import AsyncStorage from '@react-native-community/async-storage'
 import {
   loginRequest,
-  logoutRequest,
   getLocation,
   User,
   authorize,
@@ -14,9 +13,9 @@ import {
 } from './reducer'
 import { Platform } from 'react-native'
 import { PayloadAction } from '@reduxjs/toolkit'
+import Config from '../../../config'
 import axios from '../../utils/axios'
 
-const clientId = "QcPgEwcgFeAqdbjNH6TKUp9B2txXVcHw"
 function* GetLocation() {
   if (navigator.geolocation) {
     const position = yield new Promise((resolve) => navigator.geolocation.getCurrentPosition(resolve))
@@ -44,20 +43,22 @@ function* GetUserSession() {
 
 function* LoginUser(action: PayloadAction<AuthSession.DiscoveryDocument>) {
   const { payload: discovery }  = action
-  const useProxy = Platform.select({ android: true, ios: true });
+  const useProxy = Platform.select({ web: false, default: true });
   const redirectUri = AuthSession.makeRedirectUri({
-    native: 'rnexam://redirect',
     useProxy,
   });
   try {
-    const response: { params: { access_token: string }} = yield AuthSession
+    const response: { params: { access_token: string }, error: object, type: string } = yield AuthSession
       .loadAsync({
         redirectUri,
-        clientId,
+        clientId: Config.auth0ClientId,
         responseType: AuthSession.ResponseType.Token,
         scopes: ["openid", "profile"],
       }, discovery)
       .then((request: AuthSession.AuthRequest) => request.promptAsync(discovery))
+    if (response.error || response.type !== "success") {
+      return;
+    }
     yield AsyncStorage.setItem('access_token', response.params.access_token)
     yield put(sessionRequest())
   } catch(err) {

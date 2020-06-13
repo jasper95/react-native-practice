@@ -1,7 +1,9 @@
 import React from 'react'
-import { View, Text, SafeAreaView, FlatList, StyleSheet, useWindowDimensions } from 'react-native'
+import { View, Text, useWindowDimensions } from 'react-native'
+import styles from './styles'
 
 function GridHeader() {
+  // const dimensions = useWindowDimensions && useWindowDimensions()
   return (
     <View style={styles.header}>
       <Text style={styles.columnItem}>Date</Text>
@@ -13,3 +15,5 @@ function GridHeader() {
     </View>
   )
 }
+
+export default GridHeader
