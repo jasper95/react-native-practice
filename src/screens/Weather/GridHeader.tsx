@@ -9,7 +9,7 @@ function GridHeader() {
     <View style={styles.header}>
       <Text style={{flex: 4}}>Date</Text>
       <Text style={{ flex: 4}}>Temperature</Text>
-      {width !== 0 && (width < 320) && (
+      {width !== 0 && (width > 360) && (
         <>
           <Text style={{ flex: 3}}>Description</Text>
           <Text style={{ flex: 1}}>Main</Text>

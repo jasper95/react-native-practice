@@ -11,7 +11,7 @@ function RowItem({ item }: { item: ItemResponse}) {
     <View style={styles.row}>
       <Text style={{ flex: 4 }}>{day(item.dt_txt).format('MM/DD/YYYY')}</Text>
       <Text style={{ flex: 4 }}>{item.main.temp}</Text>
-      {width !== 0 && (width < 320) && (
+      {width !== 0 && (width > 360) && (
         <>
           <Text style={{ flex: 3 }}>{item.weather[0]?.description}</Text>
           <Text style={{ flex: 1 }}>{item.weather[0]?.main}</Text>
